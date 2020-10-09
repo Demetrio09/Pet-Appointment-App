@@ -6,12 +6,34 @@ class AddAppointments extends Component {
     super();
     this.state = {
       petName: "",
-      petOwner: "",
+      ownerName: "",
       aptDate: "",
       aptTime: "",
       aptNotes: "",
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleAddApt = this.handleAddApt.bind(this);
+  }
+
+  handleAddApt(e) {
+    e.preventDefault();
+
+    let tempApt = {
+      petName: this.state.petName,
+      ownerName: this.state.ownerName,
+      aptDate: this.state.aptDate + " " + this.state.aptTime,
+      aptNotes: this.state.aptNotes,
+    };
+
+    this.props.addAppointment(tempApt);
+
+    this.setState({
+      petName: "",
+      ownerName: "",
+      aptDate: "",
+      aptTime: "",
+      aptNotes: "",
+    });
   }
 
   handleChange(e) {
@@ -72,9 +94,9 @@ class AddAppointments extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  name="petOwner"
+                  name="ownerName"
                   placeholder="Owner's Name"
-                  value={this.state.petOwner}
+                  value={this.state.ownerName}
                   onChange={this.handleChange}
                 />
               </div>
@@ -138,6 +160,7 @@ class AddAppointments extends Component {
                 <button
                   type="submit"
                   className="btn btn-primary d-block ml-auto"
+                  onClick={this.handleAddApt}
                 >
                   Add Appointment
                 </button>
